@@ -12,19 +12,21 @@ jobs:
       FLUTTER_STORAGE_BASE_URL: https://storage.flutter-io.cn
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: xiachufang_flutter
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
 
       - name: install flutter
         run: |
-            cd ${{ github.home }}
+            cd ${{ github.workspace }}
             git clone --depth 1 --branch 2.5.1 https://github.com/flutter/flutter.git
-            export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+            echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
 
       - name: Build and Publish
         run: |
-          cd ${{ github.workspace }}
+          cd ${{ github.workspace }}/xiachufang_flutter
           echo "==Start flutter build aar"
           flutter build aar --no-debug --no-profile --build-number ${{ github.event.release.tag_name }}
           echo "==flutter build success."
