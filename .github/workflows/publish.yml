@@ -1,0 +1,32 @@
+name: FLUTTER_PUBLISH
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish_android_aar:
+    runs-on: ubuntu-latest
+    env:
+      PUB_HOSTED_URL: https://pub.flutter-io.cn
+      FLUTTER_STORAGE_BASE_URL: https://storage.flutter-io.cn
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: install flutter
+        run: |
+            cd ${{ github.home }}
+            git clone --depth 1 --branch 2.5.1 https://github.com/flutter/flutter.git
+            export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+
+      - name: Build and Publish
+        run: |
+          cd ${{ github.workspace }}
+          echo "==Start flutter build aar"
+          flutter build aar --no-debug --no-profile --build-number ${{ github.event.release.tag_name }}
+          echo "==flutter build success."
+    outputs:
+      job-status: ${{ job.status }}
