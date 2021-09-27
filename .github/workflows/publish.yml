@@ -23,6 +23,7 @@ jobs:
             cd ${{ github.workspace }}
             git clone --depth 1 --branch 2.5.1 https://github.com/flutter/flutter.git
             echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
+            flutter precache --android --no-universal
 
       - name: Build and Publish
         run: |
