@@ -17,12 +17,10 @@ jobs:
           
       - name: Cache Flutter dependencies
         id: cache-flutter
-        uses: actions/cache@v2
+        uses: gerbal/always-cache@v1.0.3
         with:
           path: ${{ github.workspace }}/flutter
           key: ${{ runner.OS }}-flutter-install-cache-2.5.1
-          restore-keys: |
-            ${{ runner.OS }}-flutter-install-cache-2.5.1
 
       - name: Prepare Flutter
         if: steps.cache-flutter.outputs.cache-hit != 'true'
