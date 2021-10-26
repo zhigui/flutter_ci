@@ -8,8 +8,12 @@ on:
         default: '2.5.1'
 
 jobs:
-  cache_linux:
-    runs-on: ubuntu-latest
+  install_flutter_cache:
+    name: Install & Cache Flutter on  ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     steps:
       - name: Cache Flutter dependencies
         id: cache-flutter
