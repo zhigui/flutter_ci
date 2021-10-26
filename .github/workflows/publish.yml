@@ -21,6 +21,8 @@ jobs:
         with:
           path: ${{ github.workspace }}/flutter
           key: ${{ runner.OS }}-flutter-install-cache-2.5.1
+          restore-keys: |
+            ${{ runner.OS }}-flutter-install-cache-2.5.1
 
       - name: Prepare Flutter
         if: steps.cache-flutter.outputs.cache-hit != 'true'
