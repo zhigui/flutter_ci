@@ -33,7 +33,6 @@ jobs:
             echo "${{ github.workspace }}/flutter/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
 
       - name: Install Flutter Tools
-        if: steps.cache-flutter.outputs.cache-hit != 'true'
         run: |
             flutter config --no-analytics
             flutter precache
