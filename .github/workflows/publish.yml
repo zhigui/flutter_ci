@@ -19,12 +19,14 @@ jobs:
           java-version: '12.x'
           
       - name: Cache Flutter dependencies
+        id: cache-flutter
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/flutter
           key: ${{ runner.OS }}-flutter-install-cache-2.5.1
 
       - name: Prepare Flutter
+        if: steps.cache-flutter.outputs.cache-hit != 'true'
         run: |
             cd ${{ github.workspace }}
             git clone --depth 1 --branch 2.5.1 https://github.com/flutter/flutter.git
@@ -32,6 +34,7 @@ jobs:
             echo "${{ github.workspace }}/flutter/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
 
       - name: Install Flutter Tools
+        if: steps.cache-flutter.outputs.cache-hit != 'true'
         run: |
             flutter config --no-analytics
             flutter precache
